@@ -1,9 +1,10 @@
-#include "lualinux.h"
-
 #define _GNU_SOURCE 1
+
+#include "lualinux.h"
 
 #include "unistd.h"
 #include "sched.h"
+#include "linux/sched.h"
 #include "sys/mount.h"
 
 #include "lua.h"

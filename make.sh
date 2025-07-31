@@ -7,7 +7,7 @@ LUAVER="${LUAVER:-5.4}"
 LUA="${LUA:-lua${LUAVER}}"
 
 CFLAGS="${CFLAGS:- -std=c99}"
-LDFLAGS="${LDFLAGS} -static"
+LDFLAGS="${LDFLAGS} -lm"
 IFLAGS="${IFLAGS}"
 
 cleanup(){
