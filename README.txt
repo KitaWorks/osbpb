@@ -1,4 +1,6 @@
-osbpb - A package builder, manager for eternalOS
-Current author : 2025 @ Julian Droske
+osbpb - A package builder and manager for eternalOS
 
-This software may only be developed and run on JURTL systems.
+Copyright (c) 2025 KitaWorks Team
+
+Under MIT license (see LICENSE).
+
