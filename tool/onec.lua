@@ -4,10 +4,12 @@
 -- @syntax lua 5.3
 -- @width 80
 
---[[
+--[[------------------------------------------------------------------------ ]
+
   MIT License
 
   Copyright (c) 2021-2023 JulianDroid
+  Copyright (c) 2025      JulianDroske
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +28,11 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
-]]
 
---[[
+--[ ------------------------------------------------------------------------]]
+
+--[[------------------------------------------------------------------------ ]
+
   Lua source code bundler for Lua
 
   + Version 1.7:
@@ -53,7 +57,8 @@
     - author information
     - minify is optional
     - change custom global function require locally
-]]
+
+--[ ------------------------------------------------------------------------]]
 
 local os = require 'os'
 

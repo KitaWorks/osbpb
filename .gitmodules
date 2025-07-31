@@ -1,0 +1,4 @@
+[submodule "lib/lua"]
+	path = lib/lua
+	url = https://github.com/lua/lua
+	branch = 5.4.8
