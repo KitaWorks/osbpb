@@ -119,12 +119,10 @@ test -f "${CONFIG_CACHE_FILE}" &&
 HAS_SOURCE_CHANGE=n
 
 compile_c_obj() {
-  source="${1}"
-  source_name_nosuffix="$(basename ${source%%.c})"
-  objfile="${OUTDIR}/${source_name_nosuffix}.o"
-  OBJS="${OBJS} ${objfile}"
-  timestamp="$(stat -c %Y ${source})"
-  timestamp_cache_file="${OUTDIR}/.timestamp.${source_name_nosuffix}"
+  srcfile="${1}"
+  objfile="${2}"
+  timestamp="$(stat -c %Y ${srcfile})"
+  timestamp_cache_file="${OUTDIR}/.timestamp.$(basename ${srcfile})"
 
   test "${IS_CONFIG_SAME}" = y &&
     test -f "${timestamp_cache_file}" &&
@@ -132,7 +130,7 @@ compile_c_obj() {
     return 0
 
   log_compile CC "${objfile}"
-  "${CC}" ${IFLAGS} ${CFLAGS} -c -o "${objfile}" "${source}"
+  "${CC}" ${IFLAGS} ${CFLAGS} -c -o "${objfile}" "${srcfile}"
   HAS_SOURCE_CHANGE=y
   # update timestamp cache
   print_raw "${timestamp}" >"${timestamp_cache_file}"
@@ -148,7 +146,10 @@ try_mkdir "${OUTDIR}/include"
 IFLAGS="${IFLAGS} -I${OUTDIR}/include"
 
 for srcfile in ${SRCS}; do
-  compile_c_obj "${srcfile}"
+  source_name_nosuffix="$(basename ${srcfile%%.c})"
+  objfile="${OUTDIR}/${source_name_nosuffix}.o"
+  OBJS="${OBJS} ${objfile}"
+  compile_c_obj "${srcfile}" "${objfile}"
 done
 
 # link
