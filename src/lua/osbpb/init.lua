@@ -1,11 +1,10 @@
 --[[
    OSBPB - A lua implementation of OSBPB
-   2025 @ Julian Droske
+   2025 @ KitaWorks Team
 ]]
 
--- @syntax lua
+-- @syntax lua 5.4
 -- @indent space 3
--- @rt lua5.4
 
 require 'osbpb.cli'
 

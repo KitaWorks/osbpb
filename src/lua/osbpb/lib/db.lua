@@ -2,11 +2,11 @@
    osbdb - a db implementation for osbpb
 ]]
 
-local oop = require 'osbpb.oop'
+local misc = require 'osbpb.misc'
 
 local DB_PATHNAME='/var/lib/osbpb/db'
 
-local db = oop.class {
+local db = misc.class {
    new = function(self)
    end
 }

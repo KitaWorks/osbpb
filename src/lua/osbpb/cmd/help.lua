@@ -1,7 +1,7 @@
 local function help(args)
-   local parser = args
+   local parser = args.parser
 
-   print(parser:get_usage())
+   print(parser:get_help())
 end
 
 return help

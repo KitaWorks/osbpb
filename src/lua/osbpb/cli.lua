@@ -1,61 +1,61 @@
-local argparse = require 'osbpb.lib.argparse'
-
 local misc = require 'osbpb.misc'
 
-local package = require 'osbpb.cmd.package'
+local subcmds = {
+   help = require 'osbpb.cmd.help',
+   package = require 'osbpb.cmd.package',
+}
 
--- subcommands
+local argparse = require 'osbpb.ext.argparse'
 
-local function do_package(args)
-   
-end
-
-local function do_install(args)
-end
-
---` define arguments
+-- define arguments
 
 local parser = argparse(
    'osbpb',
    'OSBPB - The package manager and maker for eternalOS'
-)
+):add_help(false)
 
 -- TODO add group
 
-parser:option('-p --package',     'Enter packaging environment')
-parser:option('-i --install',     'Install package(s)')
-parser:option('-u --uninstall',   'Uninstall package(s)')
-parser:option('-l --list',        'List installed packages')
-parser:option('-o --extract',     'Unpack a package file')
+parser:flag('-p --package',       'Enter packaging environment')
+parser:flag('-i --install',       'Install package(s)')
+parser:flag('-u --uninstall',     'Uninstall package(s)')
+parser:flag('-l --list',          'List installed packages')
+parser:flag('-o --extract',       'Unpack a package file')
 
-parser:option('-h --help',        'Show this help text and exit')
+parser:flag('-h --help',          'Show this help text and exit')
 
--- parser:option('-y --skip',       'Skip questions and '
 parser:option('-e --eval',
    'Eval a command instead of running into an interactive shell'):
-   args(1)
+   args(1):argname '<string>'
 parser:option('-s --source',      'Copy a folder to /src inside'):
-   args(1)
+   args(1):argname '<folder>'
 
-parser:option('-v',               'Be verbose')
+parser:flag('-v',                 'Be verbose')
 
-parser:argument('rest',
+parser:argument('args',
    'Optional arguments corresponding to subcommands'):
-   args('?')
+   args '*':target 'rest'
 
 -- parse arguments
 
 local args = parser:parse()
 
 -- insert rest into args - it's easier to parse
+
 args.__index = args.rest
 args.rest.__metatable = nil
 setmetatable(args, args)
 
 args.parser = parser
 
-misc.on(args, {
-   help = help,
-   package = package,
-})
+-- so now `args` includes all arguments including optional and variadic
+-- and a parser instance
+
+-- call the subcommand
+
+local triggered, ret = misc.oncase(args, subcmds)
+
+if not triggered then
+   return subcmds.help(args)
+end
 

@@ -1,3 +1,4 @@
+
 local oop = {
    call = function(cls, ...)
       local instance = {
@@ -22,8 +23,11 @@ local module = {
 
    oncase = function(var, cases, ...)
       for k, v in pairs(cases) do
-         if var[k] then v(var, ...) end
+         if var[k] then
+            return true, v(var, ...)
+         end
       end
+      return false
    end
 }
 

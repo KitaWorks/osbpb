@@ -1,6 +1,7 @@
 -- The MIT License (MIT)
 
 -- Copyright (c) 2013 - 2018 Peter Melnichenko
+-- Copyright (c) 2025        Julian Droske
 
 -- Permission is hereby granted, free of charge, to any person obtaining a copy of
 -- this software and associated documentation files (the "Software"), to deal in
@@ -483,31 +484,8 @@ end
 function Option:_get_label_lines()
    local argument_list = self:_get_argument_list()
 
-   if #argument_list == 0 then
-      -- Don't put aliases for simple flags like `-h` on different lines.
-      return {table.concat(self._aliases, ", ")}
-   end
-
-   local longest_alias_length = -1
-
-   for _, alias in ipairs(self._aliases) do
-      longest_alias_length = math.max(longest_alias_length, #alias)
-   end
-
-   local argument_list_repr = table.concat(argument_list, " ")
-   local lines = {}
-
-   for i, alias in ipairs(self._aliases) do
-      local line = (" "):rep(longest_alias_length - #alias) .. alias .. " " .. argument_list_repr
-
-      if i ~= #self._aliases then
-         line = line .. ","
-      end
-
-      table.insert(lines, line)
-   end
-
-   return lines
+   -- patch: https://github.com/mpeterv/argparse/commit/8baabbbe23d0ef5cdabb947499a1538dbd854995#diff-0ac32e60116d4dbe37885921d85ef33ff589e1b88ac691ebcc0f9ce92144a85eL453-R481
+   return {table.concat(self._aliases, ", ") .. ' ' .. table.concat(argument_list, " ")}
 end
 
 function Command:_get_label_lines()
