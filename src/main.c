@@ -27,6 +27,7 @@
 #define osbpb_logf(level, fmt, ...) osbpb_logf_##level(fmt, __VA_ARGS__)
 #define osbpb_log(level, str) osbpb_logf(level, "%s\n", str)
 
+/* -- functions ----------------------------------------------------------- */
 int osbpb_lua_error_traceback(lua_State *L){
   osbpb_logf(error, "Caught error in lua runtime: %s\n", lua_tostring(L, -1));
   luaL_traceback(L, L, NULL, 1);
@@ -36,6 +37,8 @@ int osbpb_lua_error_traceback(lua_State *L){
 }
 
 int main(int argc, char *const argv[]) {
+  int ret = 1;
+
   lua_State *L = luaL_newstate();
   if (!L) {
     osbpb_log(error, "Unable to create lua vm.");
@@ -75,12 +78,12 @@ int main(int argc, char *const argv[]) {
     goto fail_main_pcall;
   }
 
-  return 0;
+  ret = 0;
 
 fail_main_pcall:
 fail_main_load_lua:
   lua_close(L);
 fail_main_newstate:
-  return 1;
+  return ret;
 }
 
